@@ -9,7 +9,7 @@ const resolvers = {
   Query,
   Mutation,
   Subscription,
-  Feed,
+  Feed
 }
 
 const server = new GraphQLServer({
@@ -20,9 +20,9 @@ const server = new GraphQLServer({
     db: new Prisma({
       typeDefs: 'src/generated/prisma.graphql',
       endpoint: '__PRISMA_ENDPOINT__',
-      secret: 'mysecret123',
-    }),
-  }),
+      secret: 'mysecret123'
+    })
+  })
 })
 
 server.start(() => console.log('Server is running on http://localhost:4000'))

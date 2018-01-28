@@ -1,8 +1,7 @@
+/* eslint-disable func-style, no-unused-vars */
 async function feed(parent, args, ctx, info) {
   const { filter, first, skip } = args // destructure input arguments
-  const where = filter
-    ? { OR: [{ url_contains: filter }, { description_contains: filter }] }
-    : {}
+  const where = filter ? { OR: [ { url_contains: filter }, { description_contains: filter } ] } : {}
 
   const allLinks = await ctx.db.query.links({})
   const count = allLinks.length
@@ -11,10 +10,10 @@ async function feed(parent, args, ctx, info) {
 
   return {
     linkIds: queriedLinkes.map(link => link.id),
-    count,
+    count
   }
 }
 
 module.exports = {
-  feed,
+  feed
 }

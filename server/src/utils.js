@@ -1,3 +1,4 @@
+/* eslint-disable func-style, no-unused-vars */
 const jwt = require('jsonwebtoken')
 const APP_SECRET = 'GraphQL-is-aw3some'
 
@@ -14,5 +15,5 @@ function getUserId(context) {
 
 module.exports = {
   APP_SECRET,
-  getUserId,
+  getUserId
 }
