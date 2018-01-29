@@ -38,6 +38,8 @@ class CreateLink extends Component {
     await this.props.postMutation({
       variables: { description, url }
     })
+    // Navigate to home page after mutation is complete
+    this.props.history.push('/')
   }
 }
 

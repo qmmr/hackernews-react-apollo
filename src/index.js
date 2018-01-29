@@ -1,5 +1,6 @@
 import './styles/index.css'
 
+import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import App from './components/App'
@@ -17,9 +18,12 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-  document.getElementById('root')
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
+  document.getElementById('root'),
 )
+
 registerServiceWorker()
