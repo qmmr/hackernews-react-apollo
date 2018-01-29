@@ -39,7 +39,7 @@ class LinkList extends Component {
   }
 }
 
-const FEED_QUERY = gql`
+export const FEED_QUERY = gql`
   # 2
   query FeedQuery {
     feed {

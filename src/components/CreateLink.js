@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react'
+import { FEED_QUERY } from './LinkList'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 
@@ -36,7 +37,15 @@ class CreateLink extends Component {
   _createLink = async () => {
     const { description, url } = this.state
     await this.props.postMutation({
-      variables: { description, url }
+      variables: { description, url },
+      update: (store, { data: { post } }) => {
+        const data = store.readQuery({ query: FEED_QUERY })
+        data.feed.links.splice(0, 0, post)
+        store.writeQuery({
+          query: FEED_QUERY,
+          data
+        })
+      }
     })
     // Navigate to home page after mutation is complete
     this.props.history.push('/')
