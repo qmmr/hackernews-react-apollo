@@ -29,8 +29,7 @@ class Search extends Component {
       query: FEED_SEARCH_QUERY,
       variables: { filter }
     })
-    const links = result.data.feed.links
-    this.setState({ links })
+    this.setState({ links: result.data.feed.links })
   }
 }
 
