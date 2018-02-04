@@ -6,6 +6,10 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 
 class LinkList extends Component {
+  componentDidMount() {
+    this._subscribeToNewLinks()
+  }
+
   _updateCacheAfterVote = (store, createVote, linkId) => {
     // 1
     const data = store.readQuery({ query: FEED_QUERY })
@@ -42,9 +46,13 @@ class LinkList extends Component {
           }
         }
       `,
-      updateQuery: (previous, { subscriptionData }) => {
-        // ... you'll implement this in a bit
-      }
+      // INFO: Works as Redux reducer, takes state and update function that returns the new state
+      updateQuery: (previous, { subscriptionData }) => ({
+        ...previous,
+        feed: {
+          links: [ subscriptionData.data.newLink.node, ...previous.feed.links ]
+        }
+      })
     })
   }
 
