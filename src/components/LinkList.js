@@ -8,6 +8,7 @@ import { graphql } from 'react-apollo'
 class LinkList extends Component {
   componentDidMount() {
     this._subscribeToNewLinks()
+    this._subscribeToNewVotes()
   }
 
   _updateCacheAfterVote = (store, createVote, linkId) => {
@@ -52,6 +53,46 @@ class LinkList extends Component {
         feed: {
           links: [ subscriptionData.data.newLink.node, ...previous.feed.links ]
         }
+      })
+    })
+  }
+
+  _subscribeToNewVotes = () => {
+    this.props.feedQuery.subscribeToMore({
+      document: gql`
+        subscription {
+          newVote {
+            node {
+              id
+              link {
+                id
+                url
+                description
+                createdAt
+                postedBy {
+                  id
+                  name
+                }
+                votes {
+                  id
+                  user {
+                    id
+                  }
+                }
+              }
+              user {
+                id
+              }
+            }
+          }
+        }
+      `,
+      // INFO: Same as above ☝️ but here we do not need to use subscriptionData.data.newVote.node.link.id
+      // INFO: There is a bug in resolvers/Subscription.js (server-side) and "where clause is disabled"
+      // eslint-disable-next-line
+      updateQuery: (previous, data) => ({
+        ...previous,
+        allLinks: previous.feed.links.slice()
       })
     })
   }
