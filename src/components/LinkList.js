@@ -18,6 +18,36 @@ class LinkList extends Component {
     store.writeQuery({ query: FEED_QUERY, data })
   }
 
+  _subscribeToNewLinks = () => {
+    this.props.feedQuery.subscribeToMore({
+      document: gql`
+        subscription {
+          newLink {
+            node {
+              id
+              url
+              description
+              createdAt
+              postedBy {
+                id
+                name
+              }
+              votes {
+                id
+                user {
+                  id
+                }
+              }
+            }
+          }
+        }
+      `,
+      updateQuery: (previous, { subscriptionData }) => {
+        // ... you'll implement this in a bit
+      }
+    })
+  }
+
   render() {
     if (this.props.feedQuery && this.props.feedQuery.loading) {
       return <div>Loading</div>
